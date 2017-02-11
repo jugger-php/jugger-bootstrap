@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use jugger\bootstrap\Alert;
 
-class BootstrapAlertTest extends TestCase
+class AlertTest extends TestCase
 {
     public function testBase()
     {

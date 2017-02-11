@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use jugger\bootstrap\Badge;
 
-class BootstrapBadgeTest extends TestCase
+class BadgeTest extends TestCase
 {
     public function testDropdown()
     {
