@@ -21,7 +21,9 @@ class BreadcrumbTest extends TestCase
         );
         $this->assertEquals(
             Breadcrumb::widget([
-                'id' => 'my-breadcrumb',
+                'options' => [
+                    'id' => 'my-breadcrumb',
+                ],
             ]),
             "<ol class='breadcrumb' id='my-breadcrumb'></ol>"
         );

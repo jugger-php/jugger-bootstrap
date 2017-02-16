@@ -2,48 +2,43 @@
 
 namespace jugger\bootstrap;
 
-use jugger\ds\Ds;
-use jugger\html\Tag;
+use jugger\ui\Widget;
 use jugger\html\EmptyTag;
 use jugger\html\ContentTag;
 use jugger\html\tag\Li;
-use jugger\bootstrap\ItemsTrait;
+use jugger\html\tag\Ol;
 
-class Breadcrumb extends ContentTag
+class Breadcrumb extends Widget
 {
-    use ItemsTrait;
+    public $items = [];
+    public $options = [];
 
-    public function __construct(array $params)
+    public function init()
     {
-        $this->class = 'breadcrumb';
-
-        $params = Ds::arr($params);
-        if ($params['items']) {
-            $this->addItems($params['items']);
-        }
-
-        $params->remove('items');
-        parent::__construct('ol', '', $params->toArray());
+        $options = [
+            'class' => 'breadcrumb',
+        ];
+        $this->options = array_merge($options, $this->options);
     }
 
-    public function addItems(array $items)
+    public function run()
     {
-        foreach ($items as $item) {
-            if (is_string($item)) {
-                $this->add(new EmptyTag($item));
-            }
-            elseif ($item instanceof Tag) {
-                $li = new Li();
-                $li->class = 'breadcrumb-item';
-                $li->add($item);
-                if (end($items) === $item) {
-                    $li->class .= " active";
-                }
-                $this->add($li);
+        $tag = new Ol('', $this->options);
+        foreach ($this->items as $item) {
+            if (is_scalar($item)) {
+                $li = new EmptyTag($item);
             }
             else {
-                throw new \Exception('Invalide type of item. Must be only "string" or implements "\jugger\html\Tag"');
+                $li = new Li("{$item}", [
+                    'class' => 'breadcrumb-item',
+                ]);
+                if ($item === end($this->items)) {
+                    $li->class .= ' active';
+                }
             }
+            $tag->add($li);
         }
+
+        return $tag->render();
     }
 }

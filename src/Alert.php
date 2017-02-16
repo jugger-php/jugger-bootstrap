@@ -2,65 +2,87 @@
 
 namespace jugger\bootstrap;
 
-use jugger\ds\Ds;
+use jugger\ui\Widget;
 use jugger\html\ContentTag;
 use jugger\html\tag\P;
+use jugger\html\tag\Div;
 use jugger\html\tag\Button;
 
-class Alert extends ContentTag
+class Alert extends Widget
 {
     public $type;
-    public $text;
+    public $content;
     public $header;
     public $dismiss;
+    public $options = [];
 
-    public function __construct(array $params)
+    public function init()
     {
-        $this->class = 'alert';
-        $params = Ds::arr($params);
-
-        if ($params['type']) {
-            $this->class .= " alert-{$params['type']}";
-        }
-        if ($params['dismiss']) {
-            $this->addDismiss();
-        }
-        if ($params['header']) {
-            $this->addHeader($params['header']);
-        }
-        if ($params['text']) {
-            $this->addText($params['text']);
+        $options = [
+            'class' => 'alert',
+            'role' => 'alert',
+        ];
+        if ($this->type) {
+            $options['class'] .= " alert-{$this->type}";
         }
 
-        $params->remove('type', 'text', 'header', 'dismiss');
-        $params->merge(['role' => 'alert']);
-        parent::__construct('div', '', $params->toArray());
+        $this->options = array_merge($options, $this->options);
     }
 
-    public function addHeader(string $value)
+    public function run()
     {
-        $this->add(new ContentTag('h4', $value, ['class' => 'alert-heading']));
+        $tag = new Div('', $this->options);
+        $childs = [
+            $this->getDismissTag(),
+            $this->getHeaderTag(),
+            $this->getContentTag(),
+        ];
+        foreach ($childs as $child) {
+            if ($child) {
+                $tag->add($child);
+            }
+        }
+
+        return $tag->render();
     }
 
-    public function addText(string $value)
+    public function getDismissTag()
     {
-        $this->add(new P($value));
+        if (!$this->dismiss) {
+            return null;
+        }
+
+        $tag = new Button('<span aria-hidden="true">&times;</span>', [
+            'type' => 'button',
+            'class' => 'close',
+            'data' => [
+                'dismiss' => 'alert',
+            ],
+            'aria' => [
+                'label' => 'Close',
+            ],
+        ]);
+        return $tag;
     }
 
-    public function addDismiss()
+    public function getHeaderTag()
     {
-        $this->add(new Button(
-            '<span aria-hidden="true">&times;</span>',
-            [
-                'type' => 'button',
-                'class' => 'close',
-                'data' => [
-                    'dismiss' => 'alert',
-                ],
-                'aria' => [
-                    'label' => 'Close',
-                ],
-            ]
-        ));
+        if (!$this->header) {
+            return null;
+        }
+
+        $tag = new ContentTag('h4', $this->header, [
+            'class' => 'alert-heading',
+        ]);
+        return $tag;
+    }
+
+    public function getContentTag()
+    {
+        if (!$this->content) {
+            return null;
+        }
+
+        return new P($this->content);
     }
 }

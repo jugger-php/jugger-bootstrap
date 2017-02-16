@@ -15,7 +15,7 @@ class AlertTest extends TestCase
         );
         $this->assertEquals(
             Alert::widget([
-                'text' => 'Test content!',
+                'content' => 'Test content!',
             ]),
             "<div class='alert' role='alert'><p>Test content!</p></div>"
         );
@@ -36,7 +36,7 @@ class AlertTest extends TestCase
                 'dismiss' => true,
                 'type' => 'danger',
                 'header' => 'Test header!',
-                'text' => 'Test content!',
+                'content' => 'Test content!',
             ]),
             "<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden=\"true\">&times;</span></button><h4 class='alert-heading'>Test header!</h4><p>Test content!</p></div>"
         );

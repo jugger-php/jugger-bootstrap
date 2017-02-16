@@ -2,25 +2,33 @@
 
 namespace jugger\bootstrap;
 
-use jugger\ds\Ds;
-use jugger\html\ContentTag;
+use jugger\ui\Widget;
+use jugger\html\tag\Span;
 
-class Badge extends ContentTag
+class Badge extends Widget
 {
-    public function __construct(array $params)
+    public $pill;
+    public $type;
+    public $content;
+    public $options = [];
+
+    public function init()
     {
-        $this->class = 'badge';
-        $params = Ds::arr($params);
-        $content = $params['content'] ?? '';
-
-        if ($params['type']) {
-            $this->class .= " badge-{$params['type']}";
+        $options = [
+            'class' => 'badge',
+        ];
+        if ($this->type) {
+            $options['class'] .= " badge-{$this->type}";
         }
-        if ($params['pill']) {
-            $this->class .= " badge-pill";
+        if ($this->pill) {
+            $options['class'] .= " badge-pill";
         }
+        $this->options = array_merge($options, $this->options);
+    }
 
-        $params->remove('type', 'pill', 'content');
-        parent::__construct('span', $content, $params->toArray());
+    public function run()
+    {
+        $tag = new Span($this->content, $this->options);
+        return $tag->render();
     }
 }

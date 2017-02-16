@@ -1,13 +1,19 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use jugger\bootstrap\Card;
+use jugger\bootstrap\LinkButton;
+use jugger\html\tag\Link;
+use jugger\html\tag\Img;
+use jugger\html\tag\Div;
+use jugger\html\EmptyTag;
 
 class CardsTest extends TestCase
 {
     public function testBase()
     {
         $this->assertEquals(
-            Card::widget([
+            (string) new Card([
                 'inverse' => true,
                 'title' => 'Title',
                 'header' => 'Заголовок',
@@ -24,22 +30,24 @@ class CardsTest extends TestCase
             ]),
             "<div class='card card-inverse'>".
             "<div class='card-header'>Заголовок</div>".
-            "<img class='card-img' src='src-to-img.ext'>".
+            "<img src='src-to-img.ext' class='card-img'>".
             "<div class='card-block'>".
             "<h4 class='card-title'>Title</h4>".
             "<h6 class='card-subtitle mb-2 text-muted'>Sub Title</h6>".
-            "<p class='card-text'>Content block</p>".
+            "<div class='card-text'>Content block</div>".
             "<a href='#' class='card-link'>Test1</a>".
-            "<a href='#' class='btn btn-primary'>Test2</a>".
+            "<a class='btn btn-primary' href='#' role='button'>Test2</a>".
             "</div>".
             "<div class='card-footer'>Подвальчик</div>".
             "</div>"
         );
 
         $this->assertEquals(
-            Card::widget([
-                'id' => 'test',
-                'class' => 'card card-inverse card-primary',
+            (string) new Card([
+                'options' => [
+                    'id' => 'test',
+                    'class' => 'card card-inverse card-primary',
+                ],
                 'img' => new Img('src-to-img.ext', [
                     'class' => 'card-img-top',
                 ]),
@@ -52,7 +60,7 @@ class CardsTest extends TestCase
             "<div class='card-block'>".
             "<h4 class='card-title'>Title</h4>".
             "<h6 class='card-subtitle mb-2 text-muted'>Sub Title</h6>".
-            "<p class='card-text'><div>Content block</div></p>".
+            "<div class='card-text'><div>Content block</div></div>".
             "</div>".
             "</div>"
         );
