@@ -4,9 +4,9 @@ namespace jugger\bootstrap;
 
 class SuccessButton extends Button
 {
-    public function __construct(string $content = '', array $params = [])
+    public function __construct(string $content = '', array $options = [])
     {
-        $params['type'] = 'success';
-        parent::__construct($content, $params);
+        $options['type'] = 'success';
+        parent::__construct($content, $options);
     }
 }

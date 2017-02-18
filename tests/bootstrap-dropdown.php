@@ -1,14 +1,14 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use jugger\bootstrap\Badge;
+use jugger\bootstrap\Dropdown;
 
 class DropdownTest extends TestCase
 {
     public function testDropdown()
     {
         $this->assertEquals(
-            new Dropdown([
+            Dropdown::widget([
                 'id' => 'test',
                 'class' => 'dropdown show',
                 'button' => 'Test Label',
@@ -33,7 +33,7 @@ class DropdownTest extends TestCase
         );
 
         $this->assertEquals(
-            new Dropdown([
+            Dropdown::widget([
                 'align-right' => true,
                 'dropup' => true,
                 'split' => true,

@@ -7,29 +7,29 @@ use jugger\html\ContentTag;
 
 class Button extends ContentTag
 {
-    public function __construct(string $content = '', array $params = [])
+    public function __construct(string $content = '', array $options = [])
     {
         $this->class = 'btn';
         $this->type = 'button';
-        $params = Ds::arr($params);
+        $options = Ds::arr($options);
 
-        if ($params['type'] && $params['outline']) {
-            $this->class .= " btn-outline-{$params['type']}";
+        if ($options['type'] && $options['outline']) {
+            $this->class .= " btn-outline-{$options['type']}";
         }
-        elseif ($params['type']) {
-            $this->class .= " btn-{$params['type']}";
+        elseif ($options['type']) {
+            $this->class .= " btn-{$options['type']}";
         }
-        if (in_array($params['size'], ['sm', 'lg'])) {
-            $this->class .= " btn-{$params['size']}";
+        if (in_array($options['size'], ['sm', 'lg'])) {
+            $this->class .= " btn-{$options['size']}";
         }
-        if ($params['block']) {
+        if ($options['block']) {
             $this->class .= " btn-block";
         }
-        if ($params['active']) {
+        if ($options['active']) {
             $this->class .= " active";
         }
 
-        $params->remove('type', 'outline', 'size', 'block', 'active');
-        parent::__construct('button', $content, $params->toArray());
+        $options->remove('type', 'outline', 'size', 'block', 'active');
+        parent::__construct('button', $content, $options->toArray());
     }
 }

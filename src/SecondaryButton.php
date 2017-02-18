@@ -4,9 +4,9 @@ namespace jugger\bootstrap;
 
 class SecondaryButton extends Button
 {
-    public function __construct(string $content = '', array $params = [])
+    public function __construct(string $content = '', array $options = [])
     {
-        $params['type'] = 'secondary';
-        parent::__construct($content, $params);
+        $options['type'] = 'secondary';
+        parent::__construct($content, $options);
     }
 }

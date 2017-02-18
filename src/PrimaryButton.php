@@ -4,9 +4,9 @@ namespace jugger\bootstrap;
 
 class PrimaryButton extends Button
 {
-    public function __construct(string $content = '', array $params = [])
+    public function __construct(string $content = '', array $options = [])
     {
-        $params['type'] = 'primary';
-        parent::__construct($content, $params);
+        $options['type'] = 'primary';
+        parent::__construct($content, $options);
     }
 }

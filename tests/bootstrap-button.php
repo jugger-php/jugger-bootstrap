@@ -67,14 +67,14 @@ class ButtonTest extends TestCase
     public function testLink()
     {
         $this->assertEquals(
-            new LinkButton('Primary', '#', [
+            (string) new LinkButton('Primary', '#', [
                 'type' => 'secondary',
                 'size' => 'lg',
             ]),
             "<a class='btn btn-secondary btn-lg' href='#' role='button'>Primary</a>"
         );
         $this->assertEquals(
-            new LinkButton('Home', '/'),
+            (string) new LinkButton('Home', '/'),
             "<a class='btn btn-link' href='/' role='button'>Home</a>"
         );
     }
@@ -110,20 +110,24 @@ class ButtonTest extends TestCase
     public function testGroup()
     {
         $this->assertEquals(
-            new ButtonGroup([
+            ButtonGroup::widget([
                 'size' => 'lg',
                 'vertical' => true,
             ]),
             "<div class='btn-group-vertical btn-group-lg' role='group'></div>"
         );
         $this->assertEquals(
-            new ButtonGroup([
+            ButtonGroup::widget([
+                'options' => [
+                    'id' => 'test',
+                ],
                 'items' => [
                     new Button('Btn1'),
                     new Button('Btn2'),
+                    "Text btn",
                 ],
             ]),
-            "<div class='btn-group' role='group'><button class='btn' type='button'>Btn1</button><button class='btn' type='button'>Btn2</button></div>"
+            "<div class='btn-group' role='group' id='test'><button class='btn' type='button'>Btn1</button><button class='btn' type='button'>Btn2</button><button class='btn' type='button'>Text btn</button></div>"
         );
     }
 }

@@ -4,9 +4,9 @@ namespace jugger\bootstrap;
 
 class DangerButton extends Button
 {
-    public function __construct(string $content = '', array $params = [])
+    public function __construct(string $content = '', array $options = [])
     {
-        $params['type'] = 'danger';
-        parent::__construct($content, $params);
+        $options['type'] = 'danger';
+        parent::__construct($content, $options);
     }
 }
