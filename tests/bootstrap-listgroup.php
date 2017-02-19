@@ -1,14 +1,19 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use jugger\bootstrap\ListGroup;
+use jugger\bootstrap\Button;
+use jugger\html\tag\Link;
 
 class ListGroupTest extends TestCase
 {
-    public function testDropdown()
+    public function testBase()
     {
         $this->assertEquals(
-            new ListGroup([
-                'id' => 'test',
+            ListGroup::widget([
+                'options' => [
+                    'id' => 'test',
+                ],
                 'items' => [
                     'any content',
                     new Link('Test'),
@@ -22,7 +27,7 @@ class ListGroupTest extends TestCase
                     ],
                 ],
             ]),
-            "<ul id='test' class='list-group'>".
+            "<ul class='list-group' id='test'>".
             "<li class='list-group-item'>any content</li>".
             "<li class='list-group-item'><a href='#'>Test</a></li>".
             "<li class='list-group-item active'><button class='btn' type='button'>Hahaha</button></li>".
@@ -31,9 +36,11 @@ class ListGroupTest extends TestCase
         );
 
         $this->assertEquals(
-            new ListGroup([
+            ListGroup::widget([
                 'links' => [
-                    new Link('Test1'),
+                    new Link('Test1', '#', [
+                        'class' => 'list-group-item-success',
+                    ]),
                     [
                         'active' => true,
                         'content' => new Link('Test2'),
@@ -42,13 +49,17 @@ class ListGroupTest extends TestCase
                         'disabled' => true,
                         'content' => new Link('Test3'),
                     ],
+                    [
+                        'content' => new Link('Test4'),
+                    ],
                 ],
             ]),
-            "<ul class='list-group'>".
-            "<a class='list-group-item list-group-item-action'>Test1</a>".
-            "<a class='list-group-item active'>Test2</a>".
-            "<a class='list-group-item list-group-item-action disabled'>Test3</a>".
-            "</ul>"
+            "<div class='list-group'>".
+            "<a class='list-group-item list-group-item-success list-group-item-action' href='#'>Test1</a>".
+            "<a href='#' class='list-group-item  active'>Test2</a>".
+            "<a href='#' class='list-group-item  disabled list-group-item-action'>Test3</a>".
+            "<a href='#' class='list-group-item  list-group-item-action'>Test4</a>".
+            "</div>"
         );
     }
 }
