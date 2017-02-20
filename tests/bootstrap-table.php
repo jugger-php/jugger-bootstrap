@@ -1,6 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use jugger\bootstrap\Table;
+use jugger\html\tag\Td;
 
 class TableTest extends TestCase
 {
@@ -28,8 +30,9 @@ class TableTest extends TestCase
             ],
             [
                 'cell31',
-                'cell32',
-                'cell33',
+                new Td('cell32-33', [
+                    'colspan' => '2',
+                ]),
             ],
         ];
     }
@@ -37,7 +40,7 @@ class TableTest extends TestCase
     public function testBase()
     {
         $this->assertEquals(
-            new Table([
+            Table::widget([
                 'head' => [
                     'items' => $this->getHeaders(),
                 ],
@@ -52,13 +55,13 @@ class TableTest extends TestCase
             "<tbody>".
             "<tr><td>cell11</td><td>cell12</td><td>cell13</td></tr>".
             "<tr><td>cell21</td><td>cell22</td><td>cell23</td></tr>".
-            "<tr><td>cell31</td><td>cell32</td><td>cell33</td></tr>".
+            "<tr><td>cell31</td><td colspan='2'>cell32-33</td></tr>".
             "</tbody>".
             "</table>"
         );
 
         $this->assertEquals(
-            new Table([
+            Table::widget([
                 'inverse' => true,
                 'head' => [
                     'inverse' => true,
@@ -73,8 +76,10 @@ class TableTest extends TestCase
         );
 
         $this->assertEquals(
-            new Table([
-                'class' => 'table table-bordered table-striped table-hover',
+            Table::widget([
+                'bordered' => true,
+                'striped' => true,
+                'hover' => true,
                 'caption' => 'Заголовок',
             ]),
             "<table class='table table-bordered table-striped table-hover'><caption>Заголовок</caption></table>"
