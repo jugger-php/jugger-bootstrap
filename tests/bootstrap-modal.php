@@ -1,27 +1,32 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use jugger\bootstrap\Badge;
+use jugger\bootstrap\Modal;
+use jugger\bootstrap\PrimaryButton;
+use jugger\bootstrap\DangerButton;
+use jugger\html\tag\Link;
 
 class ModalTest extends TestCase
 {
     public function testDropdown()
     {
         $this->assertEquals(
-            new Modal([
-                'id' => 'test',
+            Modal::widget([
+                'options' => [
+                    'id' => 'test',
+                ],
                 'button' => 'My text',
                 'title' => 'My title',
                 'content' => 'My content',
                 'footer' => 'My footer',
             ]),
-            "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#test'>My text</button>".
-            "<div class='modal' id='test' tabindex='-1' role='dialog' aria-hidden='true'>".
+            "<button class='btn btn-primary' type='button' data-toggle='modal' data-target='#test'>My text</button>".
+            "<div id='test' role='dialog' class='modal' tabindex='-1' aria-hidden='true'>".
             "<div class='modal-dialog' role='document'>".
             "<div class='modal-content'>".
             "<div class='modal-header'>".
             "<h5 class='modal-title'>My title</h5>".
-            "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>".
+            "<button class='close' type='button' data-dismiss='modal' aria-label='Close'>".
             "<span aria-hidden='true'>&times;</span>".
             "</button>".
             "</div>".
@@ -33,32 +38,32 @@ class ModalTest extends TestCase
         );
 
         $this->assertEquals(
-            new Modal([
+            Modal::widget([
                 'large' => true,
-                'button' => new Button('Test modal'),
+                'button' => new Link('Test modal'),
                 'title' => 'My large title',
                 'content' => '...',
                 'footer' => [
                     new PrimaryButton('Save'),
                     new DangerButton('Close', [
-                        'data-dismiss' => modal,
+                        'data-dismiss' => 'modal',
                     ]),
                 ],
             ]),
-            "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#modal-id-1'>My text</button>".
-            "<div class='modal' id='modal-id-1' tabindex='-1' role='dialog' aria-hidden='true'>".
-            "<div class='modal-dialog' role='document'>".
+            "<a href='#' data-toggle='modal' data-target='#modal-id-2'>Test modal</a>".
+            "<div id='modal-id-2' role='dialog' class='modal' tabindex='-1' aria-hidden='true'>".
+            "<div class='modal-dialog modal-lg' role='document'>".
             "<div class='modal-content'>".
             "<div class='modal-header'>".
-            "<h5 class='modal-title'>My title</h5>".
-            "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>".
+            "<h5 class='modal-title'>My large title</h5>".
+            "<button class='close' type='button' data-dismiss='modal' aria-label='Close'>".
             "<span aria-hidden='true'>&times;</span>".
             "</button>".
             "</div>".
             "<div class='modal-body'>...</div>".
             "<div class='modal-footer'>".
-            "<button type='button' class='btn btn-primary'>Save</button>".
-            "<button type='button' class='btn btn-danger' data-dismiss='true'>Close</button>".
+            "<button class='btn btn-primary' type='button'>Save</button>".
+            "<button class='btn btn-danger' type='button' data-dismiss='modal'>Close</button>".
             "</div>".
             "</div>".
             "</div>".
