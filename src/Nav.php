@@ -39,7 +39,11 @@ class Nav extends Widget
             'class' => 'nav-item',
         ]);
 
-        if ($item instanceof Tag) {
+        if ($item instanceof Link) {
+            $link = $item;
+            $link->class .= ' nav-link';
+        }
+        elseif ($item instanceof Tag) {
             $link = $item;
         }
         elseif (is_array($item)) {

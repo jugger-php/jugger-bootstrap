@@ -38,7 +38,7 @@ class NavTest extends TestCase
             ]),
             "<ul class='nav' id='test'>".
             "<li class='nav-item'>".
-            "<a href='#'>Test1</a>".
+            "<a href='#' class=' nav-link'>Test1</a>".
             "</li>".
             "<li class='nav-item'>".
             "<a href='#' class=' nav-link active'>Test2</a>".
